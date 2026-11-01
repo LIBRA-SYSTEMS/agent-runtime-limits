@@ -1,0 +1,42 @@
+{
+  "framework": "pydantic-ai-slim",
+  "version": "2.64.0",
+  "tool_timeout_s": 0.2,
+  "provider_latency_s": 0.5,
+  "model_retries_after_failure": 1,
+  "cases": {
+    "sync_thread": {
+      "model_was_told": [
+        "ToolReturnPart: Timed out after 0.2 seconds.",
+        "run failed: Tool 'send_email' exceeded max retries count of 1. Consider raising the retry limit, or se"
+      ],
+      "emails_actually_sent": 2,
+      "seconds": 1.47
+    },
+    "async_effect_after_wait": {
+      "model_was_told": [
+        "ToolReturnPart: Timed out after 0.2 seconds.",
+        "run failed: Tool 'send_email' exceeded max retries count of 1. Consider raising the retry limit, or se"
+      ],
+      "emails_actually_sent": 0,
+      "seconds": 1.21
+    },
+    "async_effect_before_ack": {
+      "model_was_told": [
+        "ToolReturnPart: Timed out after 0.2 seconds.",
+        "run failed: Tool 'send_email' exceeded max retries count of 1. Consider raising the retry limit, or se"
+      ],
+      "emails_actually_sent": 2,
+      "seconds": 1.21
+    },
+    "async_effect_before_ack_with_idempotency_key": {
+      "model_was_told": [
+        "ToolReturnPart: Timed out after 0.2 seconds.",
+        "run failed: Tool 'send_email' exceeded max retries count of 1. Consider raising the retry limit, or se"
+      ],
+      "emails_actually_sent": 1,
+      "seconds": 1.22
+    }
+  },
+  "network_or_model_api_calls": 0
+}

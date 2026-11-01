@@ -1,0 +1,57 @@
+{
+  "framework": "smolagents",
+  "version": "1.26.0",
+  "model": "scripted Model (no API)",
+  "cases": {
+    "parent2_child3_single": {
+      "parent_max_steps": 2,
+      "child_max_steps": 3,
+      "parallel": false,
+      "child_loops": false,
+      "state": "success",
+      "actual_calls": [
+        "parent",
+        "child",
+        "child",
+        "child",
+        "parent"
+      ],
+      "total_calls": 5
+    },
+    "parent2_child3_parallel": {
+      "parent_max_steps": 2,
+      "child_max_steps": 3,
+      "parallel": true,
+      "child_loops": false,
+      "state": "success",
+      "actual_calls": [
+        "parent",
+        "child_a",
+        "child_a",
+        "child_a",
+        "child_b",
+        "child_b",
+        "child_b",
+        "parent"
+      ],
+      "total_calls": 8
+    },
+    "parent2_child3_child_loops": {
+      "parent_max_steps": 2,
+      "child_max_steps": 3,
+      "parallel": false,
+      "child_loops": true,
+      "state": "success",
+      "actual_calls": [
+        "parent",
+        "child",
+        "child",
+        "child",
+        "child",
+        "parent"
+      ],
+      "total_calls": 6
+    }
+  },
+  "network_or_model_api_calls": 0
+}

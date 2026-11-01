@@ -1,0 +1,49 @@
+{
+  "sdk": "0.24.0",
+  "hooks_visibility": {
+    "actual_calls": [
+      "parent",
+      "child",
+      "child",
+      "child",
+      "parent"
+    ],
+    "parent_hooks_saw": [
+      "parent",
+      "parent"
+    ],
+    "parent_usage_requests": 5
+  },
+  "hooks_visibility_when_passed_to_as_tool": {
+    "actual_calls": [
+      "parent",
+      "child",
+      "child",
+      "child",
+      "parent"
+    ],
+    "parent_hooks_saw": [
+      "parent",
+      "child",
+      "child",
+      "child",
+      "parent"
+    ],
+    "parent_usage_requests": 5
+  },
+  "omitted_as_tool_max_turns_parent2": {
+    "parent_max_turns": 2,
+    "as_tool_max_turns": "omitted",
+    "status": "max_turns_exceeded: Max turns (10) exceeded",
+    "child_calls_before_stop": 10,
+    "total_calls": 11
+  },
+  "omitted_as_tool_max_turns_parent50": {
+    "parent_max_turns": 50,
+    "as_tool_max_turns": "omitted",
+    "status": "max_turns_exceeded: Max turns (10) exceeded",
+    "child_calls_before_stop": 10,
+    "total_calls": 11
+  },
+  "network_or_model_api_calls": 0
+}

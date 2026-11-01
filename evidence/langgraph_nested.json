@@ -1,0 +1,105 @@
+{
+  "framework": "langgraph",
+  "version": "1.2.19",
+  "model": "counting function nodes (no LLM)",
+  "cases": {
+    "limit5_single": {
+      "recursion_limit": 5,
+      "parallel": false,
+      "child_gets_config": true,
+      "status": "recursion_limit: Recursion limit of 5 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.",
+      "actual_model_calls": [
+        "parent",
+        "child",
+        "child",
+        "child"
+      ],
+      "total_model_calls": 4
+    },
+    "limit4_single": {
+      "recursion_limit": 4,
+      "parallel": false,
+      "child_gets_config": true,
+      "status": "recursion_limit: Recursion limit of 4 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.",
+      "actual_model_calls": [
+        "parent",
+        "child",
+        "child"
+      ],
+      "total_model_calls": 3
+    },
+    "limit5_parallel": {
+      "recursion_limit": 5,
+      "parallel": true,
+      "child_gets_config": true,
+      "status": "recursion_limit: Recursion limit of 5 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.",
+      "actual_model_calls": [
+        "parent",
+        "child_a",
+        "child_a",
+        "child_a",
+        "child_b",
+        "child_b",
+        "child_b"
+      ],
+      "total_model_calls": 7
+    },
+    "limit5_single_no_config": {
+      "recursion_limit": 5,
+      "parallel": false,
+      "child_gets_config": false,
+      "status": "recursion_limit: Recursion limit of 5 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.",
+      "actual_model_calls": [
+        "parent",
+        "child",
+        "child",
+        "child"
+      ],
+      "total_model_calls": 4
+    },
+    "limit3_single": {
+      "recursion_limit": 3,
+      "parallel": false,
+      "child_gets_config": true,
+      "status": "recursion_limit: Recursion limit of 3 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.",
+      "actual_model_calls": [
+        "parent",
+        "child",
+        "child"
+      ],
+      "total_model_calls": 3
+    },
+    "limit6_single": {
+      "recursion_limit": 6,
+      "parallel": false,
+      "child_gets_config": true,
+      "status": "completed",
+      "actual_model_calls": [
+        "parent",
+        "child",
+        "child",
+        "child",
+        "parent"
+      ],
+      "total_model_calls": 5
+    },
+    "limit6_parallel": {
+      "recursion_limit": 6,
+      "parallel": true,
+      "child_gets_config": true,
+      "status": "completed",
+      "actual_model_calls": [
+        "parent",
+        "child_a",
+        "child_a",
+        "child_a",
+        "child_b",
+        "child_b",
+        "child_b",
+        "parent"
+      ],
+      "total_model_calls": 8
+    }
+  },
+  "network_or_model_api_calls": 0
+}

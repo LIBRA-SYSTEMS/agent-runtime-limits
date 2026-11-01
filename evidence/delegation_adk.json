@@ -1,0 +1,43 @@
+{
+  "framework": "google-adk",
+  "version": "2.13.0",
+  "cases": {
+    "transfer_limit3": {
+      "style": "transfer",
+      "max_llm_calls": 3,
+      "status": "limit_exceeded: Max number of llm calls limit of `3` exceeded",
+      "actual_calls": [
+        "parent",
+        "child",
+        "child"
+      ],
+      "total_calls": 3
+    },
+    "transfer_limit4": {
+      "style": "transfer",
+      "max_llm_calls": 4,
+      "status": "completed",
+      "actual_calls": [
+        "parent",
+        "child",
+        "child",
+        "child"
+      ],
+      "total_calls": 4
+    },
+    "agent_tool_limit3": {
+      "style": "agent_tool",
+      "max_llm_calls": 3,
+      "status": "completed",
+      "actual_calls": [
+        "parent",
+        "child",
+        "child",
+        "child",
+        "parent"
+      ],
+      "total_calls": 5
+    }
+  },
+  "network_or_model_api_calls": 0
+}

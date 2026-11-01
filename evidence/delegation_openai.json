@@ -1,0 +1,42 @@
+{
+  "framework": "openai-agents",
+  "version": "0.24.0",
+  "cases": {
+    "handoff_limit2": {
+      "style": "handoff",
+      "parent_max_turns": 2,
+      "status": "max_turns_exceeded: Max turns (2) exceeded",
+      "actual_calls": [
+        "parent",
+        "child"
+      ],
+      "total_calls": 2
+    },
+    "handoff_limit4": {
+      "style": "handoff",
+      "parent_max_turns": 4,
+      "status": "completed",
+      "actual_calls": [
+        "parent",
+        "child",
+        "child",
+        "child"
+      ],
+      "total_calls": 4
+    },
+    "as_tool_limit2": {
+      "style": "as_tool",
+      "parent_max_turns": 2,
+      "status": "completed",
+      "actual_calls": [
+        "parent",
+        "child",
+        "child",
+        "child",
+        "parent"
+      ],
+      "total_calls": 5
+    }
+  },
+  "network_or_model_api_calls": 0
+}

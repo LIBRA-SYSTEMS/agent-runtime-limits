@@ -1,0 +1,98 @@
+{
+  "framework": "pydantic-ai-slim",
+  "version": "2.64.0",
+  "model": "FunctionModel (scripted, no API)",
+  "cases": {
+    "separate_limit2": {
+      "mode": "separate",
+      "parent_request_limit": 2,
+      "parallel": false,
+      "status": "completed",
+      "actual_calls": [
+        "parent",
+        "child",
+        "child",
+        "child",
+        "parent"
+      ],
+      "total_calls": 5,
+      "parent_reported_requests": 2
+    },
+    "separate_limit2_parallel": {
+      "mode": "separate",
+      "parent_request_limit": 2,
+      "parallel": true,
+      "status": "completed",
+      "actual_calls": [
+        "parent",
+        "child_a",
+        "child_b",
+        "child_a",
+        "child_b",
+        "child_a",
+        "child_b",
+        "parent"
+      ],
+      "total_calls": 8,
+      "parent_reported_requests": 2
+    },
+    "shared_usage_limit2": {
+      "mode": "shared_usage",
+      "parent_request_limit": 2,
+      "parallel": false,
+      "status": "limit_exceeded: The next request would exceed the request_limit of 2. Consider raising the limit, or see the docs on usage limits for budget-aware patterns: https://pydantic.dev/docs/ai/core-concepts/agent/#usage-limits",
+      "actual_calls": [
+        "parent",
+        "child",
+        "child",
+        "child"
+      ],
+      "total_calls": 4,
+      "parent_reported_requests": null
+    },
+    "shared_usage_limit5": {
+      "mode": "shared_usage",
+      "parent_request_limit": 5,
+      "parallel": false,
+      "status": "completed",
+      "actual_calls": [
+        "parent",
+        "child",
+        "child",
+        "child",
+        "parent"
+      ],
+      "total_calls": 5,
+      "parent_reported_requests": 5
+    },
+    "shared_usage_and_limits_limit3": {
+      "mode": "shared_usage_and_limits",
+      "parent_request_limit": 3,
+      "parallel": false,
+      "status": "limit_exceeded: The next request would exceed the request_limit of 3. Consider raising the limit, or see the docs on usage limits for budget-aware patterns: https://pydantic.dev/docs/ai/core-concepts/agent/#usage-limits",
+      "actual_calls": [
+        "parent",
+        "child",
+        "child"
+      ],
+      "total_calls": 3,
+      "parent_reported_requests": null
+    },
+    "shared_usage_and_limits_limit4_parallel": {
+      "mode": "shared_usage_and_limits",
+      "parent_request_limit": 4,
+      "parallel": true,
+      "status": "limit_exceeded: The next request would exceed the request_limit of 4. Consider raising the limit, or see the docs on usage limits for budget-aware patterns: https://pydantic.dev/docs/ai/core-concepts/agent/#usage-limits",
+      "actual_calls": [
+        "parent",
+        "child_a",
+        "child_b",
+        "child_a",
+        "child_b"
+      ],
+      "total_calls": 5,
+      "parent_reported_requests": null
+    }
+  },
+  "network_or_model_api_calls": 0
+}

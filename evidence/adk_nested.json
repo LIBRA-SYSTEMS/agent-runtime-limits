@@ -1,0 +1,71 @@
+{
+  "framework": "google-adk",
+  "version": "2.13.0",
+  "model": "scripted BaseLlm (no API)",
+  "cases": {
+    "limit2_single": {
+      "max_llm_calls": 2,
+      "parallel": false,
+      "status": "limit_exceeded: Max number of llm calls limit of `2` exceeded",
+      "actual_calls": [
+        "parent",
+        "child",
+        "child"
+      ],
+      "total_calls": 3
+    },
+    "limit3_single": {
+      "max_llm_calls": 3,
+      "parallel": false,
+      "status": "completed",
+      "actual_calls": [
+        "parent",
+        "child",
+        "child",
+        "child",
+        "parent"
+      ],
+      "total_calls": 5
+    },
+    "limit2_parallel": {
+      "max_llm_calls": 2,
+      "parallel": true,
+      "status": "limit_exceeded: Max number of llm calls limit of `2` exceeded",
+      "actual_calls": [
+        "parent",
+        "child_a",
+        "child_b",
+        "child_a",
+        "child_b"
+      ],
+      "total_calls": 5
+    },
+    "limit3_parallel": {
+      "max_llm_calls": 3,
+      "parallel": true,
+      "status": "completed",
+      "actual_calls": [
+        "parent",
+        "child_a",
+        "child_b",
+        "child_a",
+        "child_b",
+        "child_a",
+        "child_b",
+        "parent"
+      ],
+      "total_calls": 8
+    },
+    "limit1_single": {
+      "max_llm_calls": 1,
+      "parallel": false,
+      "status": "limit_exceeded: Max number of llm calls limit of `1` exceeded",
+      "actual_calls": [
+        "parent",
+        "child"
+      ],
+      "total_calls": 2
+    }
+  },
+  "network_or_model_api_calls": 0
+}

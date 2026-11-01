@@ -1,0 +1,59 @@
+{
+  "broken_control": false,
+  "broken_side_effect_control": true,
+  "verdict": "FAIL ",
+  "table": [
+    {
+      "framework": "openai-agents",
+      "version": "0.24.0",
+      "limit": "max_turns (per run)",
+      "single": 5,
+      "parallel": 8,
+      "child_inherits_limit": false,
+      "parent_sees_child_live": false,
+      "reported_total": 5
+    },
+    {
+      "framework": "pydantic-ai",
+      "version": "2.64.0",
+      "limit": "UsageLimits.request_limit (per run unless usage+limits passed)",
+      "single": 5,
+      "parallel": 8,
+      "child_inherits_limit": false,
+      "parent_sees_child_live": false,
+      "reported_total": 2,
+      "opt_in_shared_overshoot": 5
+    },
+    {
+      "framework": "langgraph",
+      "version": "1.2.19",
+      "limit": "recursion_limit (value inherited, counted per graph)",
+      "single": 5,
+      "parallel": 8,
+      "child_inherits_limit": true,
+      "parent_sees_child_live": null,
+      "reported_total": null
+    },
+    {
+      "framework": "google-adk",
+      "version": "2.13.0",
+      "limit": "RunConfig.max_llm_calls (value inherited, counted per invocation)",
+      "single": 5,
+      "parallel": 8,
+      "child_inherits_limit": true,
+      "parent_sees_child_live": null,
+      "reported_total": null
+    },
+    {
+      "framework": "smolagents",
+      "version": "1.26.0",
+      "limit": "max_steps (per agent)",
+      "single": 5,
+      "parallel": 8,
+      "child_inherits_limit": false,
+      "parent_sees_child_live": null,
+      "reported_total": null,
+      "max_steps3_loop_calls": 4
+    }
+  ]
+}

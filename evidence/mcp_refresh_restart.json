@@ -1,0 +1,40 @@
+{
+  "package": "mcp",
+  "version": "2.3.0",
+  "same_process_with_protocol_header": {
+    "first_status": 200,
+    "after_expiry_status": "interactive_login",
+    "log": [
+      {
+        "event": "unexpected",
+        "url": "https://mcp.example.com/token"
+      },
+      {
+        "event": "interactive_login_started"
+      }
+    ]
+  },
+  "same_process_without_protocol_header": {
+    "first_status": 200,
+    "after_expiry_status": "interactive_login",
+    "log": [
+      {
+        "event": "unexpected",
+        "url": "https://mcp.example.com/token"
+      },
+      {
+        "event": "interactive_login_started"
+      }
+    ]
+  },
+  "restart_expired_access_token": {
+    "status": "interactive_login",
+    "log": [
+      {
+        "event": "interactive_login_started"
+      }
+    ],
+    "stored_refresh_token_used": false
+  },
+  "network_calls": 0
+}

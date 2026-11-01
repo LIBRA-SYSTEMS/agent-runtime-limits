@@ -1,0 +1,69 @@
+{
+  "sdk": "0.24.0",
+  "outer_max_turns": 2,
+  "inner_max_turns": 3,
+  "turn_limit_only": {
+    "status": "completed",
+    "actual_calls": [
+      "parent",
+      "child",
+      "child",
+      "child",
+      "parent"
+    ],
+    "reported_requests": 5,
+    "reserved": null
+  },
+  "shared_limit_3": {
+    "status": "budget_exceeded",
+    "actual_calls": [
+      "parent",
+      "child",
+      "child"
+    ],
+    "reported_requests": null,
+    "reserved": 3
+  },
+  "shared_limit_5": {
+    "status": "completed",
+    "actual_calls": [
+      "parent",
+      "child",
+      "child",
+      "child",
+      "parent"
+    ],
+    "reported_requests": 5,
+    "reserved": 5
+  },
+  "parallel_turn_limit_only": {
+    "status": "completed",
+    "actual_calls": [
+      "parent",
+      "child_a",
+      "child_b",
+      "child_a",
+      "child_b",
+      "child_a",
+      "child_b",
+      "parent"
+    ],
+    "reported_requests": 8,
+    "reserved": null
+  },
+  "parallel_shared_limit_4": {
+    "status": "budget_exceeded",
+    "actual_calls": [
+      "parent",
+      "child_a",
+      "child_b",
+      "child_a"
+    ],
+    "reported_requests": null,
+    "reserved": 4
+  },
+  "cases": 5,
+  "result": "TURN_LIMIT_IS_NOT_GLOBAL_REQUEST_BUDGET",
+  "limitation": "Single event loop scripted model admission; not dollar/token/provider retries/distributed/streaming enforcement",
+  "network_or_model_api_calls": 0
+}
