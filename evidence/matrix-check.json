@@ -54,6 +54,20 @@
       "parent_sees_child_live": null,
       "reported_total": null,
       "max_steps3_loop_calls": 4
+    },
+    {
+      "framework": "crewai",
+      "version": "1.15.34",
+      "limit": "Agent.max_iter (per agent; one delegation per model call)",
+      "single": 5,
+      "parallel": 9,
+      "child_inherits_limit": false,
+      "parent_sees_child_live": null,
+      "reported_total": null,
+      "max_iter3_loop_calls": 4,
+      "max_iter2_parent_calls_three_delegations": 3,
+      "third_child_ran": false,
+      "same_args_loop_child_calls": 7
     }
   ]
 }

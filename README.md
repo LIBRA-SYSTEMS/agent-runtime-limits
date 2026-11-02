@@ -1,10 +1,10 @@
 # Agent runtime limits, measured: a reproducible case pack
 
-**Snapshot of 2026-11-01.** Versions move fast; re-run `lab/reproduce.sh` before citing a number.
+**Snapshot of 2026-11-01, CrewAI added 2026-11-02.** Versions move fast; re-run `lab/reproduce.sh` before citing a number.
 
 Small, offline experiments that show what agent-framework limits actually bound.
 Every model is a scripted test double, so nothing calls an API and every count is deterministic.
-Tested on macOS arm64, Python 3.12.11, with the exact versions in `requirements-*.txt`.
+Tested on macOS arm64, Python 3.12 (3.12.11, CrewAI on 3.12.13), with the exact versions in `requirements-*.txt`.
 
 This is **not** a new budget library, a security product or a vulnerability report.
 Most behaviours below are documented or intended. The value is one table, one shape,
@@ -21,10 +21,11 @@ Same shape everywhere: the parent may make 2 model calls, each child agent makes
 | langgraph 1.2.19 | `recursion_limit=6` | **5** | **8** | Yes, the value is passed down | No. Each graph counts its own supersteps |
 | google-adk 2.13.0 | `RunConfig(max_llm_calls=3)` with `AgentTool` | **5** | **8** | Yes, the value is passed down | No. Counted per invocation |
 | smolagents 1.26.0 | parent `max_steps=2`, child `max_steps=3` | **5** | **8** | No | No |
+| crewai 1.15.34 (added 2026-11-02) | parent `max_iter=2`, coworker `max_iter=3`, `allow_delegation=True` | **5** | **9** (two children, one after the other) | No. A coworker without `max_iter` uses its own default (25) | No |
 
-Source-level notes from the same versions (not run here): CrewAI 1.15.33, Microsoft Agent Framework
-1.24.0 and AutoGen AgentChat 0.7.5 also count per agent/run. Claude Agent SDK's `max_budget_usd`
-does include subagent spend (dollars, checked after responses).
+Source-level notes from the same versions (not run here): Microsoft Agent Framework 1.24.0 and
+AutoGen AgentChat 0.7.5 also count per agent/run. Claude Agent SDK's `max_budget_usd` does include
+subagent spend (dollars, checked after responses).
 
 ### The delegation style matters more than the framework
 
@@ -50,6 +51,13 @@ does include subagent spend (dollars, checked after responses).
   budgets is [#11918](https://github.com/pydantic/pydantic-ai/issues/11918).
 - **smolagents:** `max_steps=3` on a looping child made **4** model calls (one extra call to write a
   final answer when the limit is hit).
+- **crewai:** in ReAct mode each model call makes one delegation, so two coworkers need a third parent
+  call. `max_iter=2` still allowed it: when the limit is hit CrewAI makes one more call for a forced
+  final answer, so `max_iter=N` means up to N+1 model calls (`max_iter=3` on a looping coworker: 4).
+  A delegation requested in that forced call is not executed (a third coworker never ran). Separately,
+  calling the same tool with the same arguments and result 5 times in a row stops the loop
+  (`MAX_REPEATED_TOOL_CALLS = 5` in `crewai/utilities/agent_utils.py`); our looping coworker stopped
+  after 7 calls that way. Native function-calling mode and `Process.hierarchical` were not run.
 - **langgraph:** `recursion_limit` counts supersteps, not model calls. With the limit at 5 the tree
   stopped inside the child; at 6 it completed with 5 (single) or 8 (parallel) model calls.
 

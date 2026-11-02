@@ -1,0 +1,156 @@
+{
+  "framework": "crewai",
+  "version": "1.15.34",
+  "model": "scripted BaseLLM (no API), ReAct text mode",
+  "cases": {
+    "parent2_child3_single": {
+      "parent_max_iter": 2,
+      "children": [
+        "child"
+      ],
+      "child_loops": false,
+      "status": "completed",
+      "actual_calls": [
+        "parent",
+        "child",
+        "child",
+        "child",
+        "parent"
+      ],
+      "total_calls": 5,
+      "parent_calls": 2
+    },
+    "parent2_two_children_sequential": {
+      "parent_max_iter": 2,
+      "children": [
+        "child_a",
+        "child_b"
+      ],
+      "child_loops": false,
+      "status": "completed",
+      "actual_calls": [
+        "parent",
+        "child_a",
+        "child_a",
+        "child_a",
+        "parent",
+        "child_b",
+        "child_b",
+        "child_b",
+        "parent"
+      ],
+      "total_calls": 9,
+      "parent_calls": 3
+    },
+    "parent3_two_children_sequential": {
+      "parent_max_iter": 3,
+      "children": [
+        "child_a",
+        "child_b"
+      ],
+      "child_loops": false,
+      "status": "completed",
+      "actual_calls": [
+        "parent",
+        "child_a",
+        "child_a",
+        "child_a",
+        "parent",
+        "child_b",
+        "child_b",
+        "child_b",
+        "parent"
+      ],
+      "total_calls": 9,
+      "parent_calls": 3
+    },
+    "parent2_three_children_sequential": {
+      "parent_max_iter": 2,
+      "children": [
+        "child_a",
+        "child_b",
+        "child_c"
+      ],
+      "child_loops": false,
+      "status": "completed",
+      "actual_calls": [
+        "parent",
+        "child_a",
+        "child_a",
+        "child_a",
+        "parent",
+        "child_b",
+        "child_b",
+        "child_b",
+        "parent"
+      ],
+      "total_calls": 9,
+      "parent_calls": 3
+    },
+    "parent2_child3_child_loops": {
+      "parent_max_iter": 2,
+      "children": [
+        "child"
+      ],
+      "child_loops": true,
+      "status": "completed",
+      "actual_calls": [
+        "parent",
+        "child",
+        "child",
+        "child",
+        "child",
+        "parent"
+      ],
+      "total_calls": 6,
+      "parent_calls": 2
+    },
+    "parent2_child_default_limit_loops": {
+      "parent_max_iter": 2,
+      "children": [
+        "child"
+      ],
+      "child_loops": true,
+      "status": "completed",
+      "actual_calls": [
+        "parent",
+        "child",
+        "child",
+        "child",
+        "child",
+        "child",
+        "child",
+        "child",
+        "child",
+        "child",
+        "child",
+        "child",
+        "parent"
+      ],
+      "total_calls": 13,
+      "parent_calls": 2
+    },
+    "parent2_child_default_limit_same_args_loops": {
+      "parent_max_iter": 2,
+      "children": [
+        "child"
+      ],
+      "child_loops": true,
+      "status": "completed",
+      "actual_calls": [
+        "parent",
+        "child",
+        "child",
+        "child",
+        "child",
+        "child",
+        "child",
+        "child",
+        "parent"
+      ],
+      "total_calls": 9,
+      "parent_calls": 2
+    }
+  },
+  "network_or_model_api_calls": 0
+}

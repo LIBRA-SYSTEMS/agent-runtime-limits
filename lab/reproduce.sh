@@ -39,6 +39,7 @@ run langgraph     langgraph_nested.json            langgraph_nested.py
 run google-adk    adk_nested.json                  adk_nested.py
 run google-adk    delegation_adk.json              delegation_style.py adk
 run smolagents    smolagents_nested.json           smolagents_nested.py
+run crewai        crewai_nested.json               crewai_nested.py
 
 echo "Checking tables:"
 python3 "$LAB/check_matrix.py" > "$EV/matrix-check.json" && echo "  matrix-check: PASS"

@@ -22,6 +22,7 @@ def rows():
     lg = load("langgraph_nested.json")
     ad = load("adk_nested.json")
     sm = load("smolagents_nested.json")
+    cr = load("crewai_nested.json")["cases"]
     return [
         {"framework": "openai-agents", "version": oa["sdk"], "limit": "max_turns (per run)",
          "single": len(oa["turn_limit_only"]["actual_calls"]), "parallel": len(oa["parallel_turn_limit_only"]["actual_calls"]),
@@ -44,6 +45,16 @@ def rows():
          "single": sm["cases"]["parent2_child3_single"]["total_calls"], "parallel": sm["cases"]["parent2_child3_parallel"]["total_calls"],
          "child_inherits_limit": False, "parent_sees_child_live": None, "reported_total": None,
          "max_steps3_loop_calls": sm["cases"]["parent2_child3_child_loops"]["actual_calls"].count("child")},
+        {"framework": "crewai", "version": load("crewai_nested.json")["version"],
+         "limit": "Agent.max_iter (per agent; one delegation per model call)",
+         "single": cr["parent2_child3_single"]["total_calls"],
+         "parallel": cr["parent2_two_children_sequential"]["total_calls"],  # two children, delegated one after the other
+         "child_inherits_limit": cr["parent2_child_default_limit_loops"]["actual_calls"].count("child") <= 3,
+         "parent_sees_child_live": None, "reported_total": None,
+         "max_iter3_loop_calls": cr["parent2_child3_child_loops"]["actual_calls"].count("child"),
+         "max_iter2_parent_calls_three_delegations": cr["parent2_three_children_sequential"]["parent_calls"],
+         "third_child_ran": "child_c" in cr["parent2_three_children_sequential"]["actual_calls"],
+         "same_args_loop_child_calls": cr["parent2_child_default_limit_same_args_loops"]["actual_calls"].count("child")},
     ]
 
 
@@ -63,6 +74,15 @@ def check(table, broken=False, broken_side_effect=False):
     assert by["pydantic-ai"]["reported_total"] == 2          # parent result under-reports 5 real calls
     assert by["pydantic-ai"]["opt_in_shared_overshoot"] == 5  # request_limit=4, known pydantic-ai#10142
     assert by["smolagents"]["max_steps3_loop_calls"] == 4     # max_steps=3 costs one extra summary call
+    # CrewAI: same 5 for one child; two children cost 9 because each delegation takes its own parent call.
+    cr = by["crewai"]
+    assert cr["single"] == expect_single, ("crewai", cr["single"])
+    assert cr["parallel"] == (2 if broken else 9), ("crewai", cr["parallel"])
+    assert cr["child_inherits_limit"] is False                 # child without max_iter ran 11 calls (default 25)
+    assert cr["max_iter3_loop_calls"] == 4                     # max_iter=3 plus one forced final-answer call
+    assert cr["max_iter2_parent_calls_three_delegations"] == 3 # max_iter=2 -> 3rd call is the forced answer
+    assert cr["third_child_ran"] is False                      # the forced call's delegation is not executed
+    assert cr["same_args_loop_child_calls"] == 7               # repeated-call guard (5 identical calls) stops it
     hv = load("openai_agents_hooks_default.json")["hooks_visibility_when_passed_to_as_tool"]["parent_hooks_saw"]
     assert hv.count("child") == 3   # same RunHooks passed to as_tool(hooks=...) sees child calls live
     # Same framework, two delegation styles.
